@@ -1,0 +1,111 @@
+<ion-menu side="right" [content]="content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Order Actions</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="scanItem(false)">
+        <ion-icon name="barcode" item-left></ion-icon>Scan Item
+      </button>
+
+      <button *ngIf="(save == true && hasOrder)" ion-item (click)="finishOrder()">
+        <ion-icon name="done-all" item-left></ion-icon>Finish Order
+      </button>
+      <button *ngIf="(save == false  && hasOrder)" ion-item (click)="updateOrder(orderData.order_id)">
+        <ion-icon name="done-all" item-left></ion-icon>Update Order
+      </button>
+
+      <button ion-item (click)="cancelOrder()" *ngIf="hasOrder">
+        <ion-icon name="close-circle" item-left></ion-icon>Cancel Order
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{title}}{{orderData.order_id}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list>
+    <button ion-item (click)="openCustomerContact()" icon-left>
+      <ion-icon name="information-circle" item-start></ion-icon>
+      Customer Information
+    </button>
+  </ion-list>
+
+  <ion-row>
+    <ion-col col-2>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>Seach Item Code</ion-label>
+          <ion-input type="text" id="itemcode" #itemcode></ion-input>
+          <button style="font-size:large;" clear ion-button item-right (click)="searchItemByItemCode(itemcode)">
+            <ion-icon name="search"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+    <ion-col col-3>
+      <ion-list>
+        <ion-item>
+          <ion-label stacked>Order Discounts(%)</ion-label>
+          <ion-input type="number" id="default_disc" #defaultDisc></ion-input>
+          <button style="font-size:large;" clear ion-button item-right (click)="applyDefaultDiscount(defaultDisc)">
+              <ion-icon name="play"></ion-icon>
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-col>
+  </ion-row>
+
+  <ion-list>
+    <ion-list-header>
+      Items Ordered
+    </ion-list-header>
+    <ion-item>
+      <div class="row header">
+        <div class="col" col-2 text-wrap>SKU</div>
+        <div class="col" col-2 text-wrap>Item Price</div>
+        <div class="col" col-2 text-wrap>Qty-On-Hand</div>
+        <div class="col" col-2 text-wrap>QTY.</div>
+        <div class="col" col-2 text-wrap>Discounted Price</div>
+        <div class="col" col-2 text-wrap>Subtotal</div>
+      </div>
+      <div class="row body" *ngFor="let item of product; let i = index" [attr.data-index]="i">
+        <div id="item-{{i+1}}" col-12 class="scanned-item">
+          <div text-wrap (press)="presentPopover($event,(i+1))" id="sku-{{i+1}}" class="col sku" col-2>{{item.rec_id}} -- {{item.sku}}</div>
+          <div text-wrap (press)="presentPopover($event,(i+1))" id="price-{{i+1}}" class="col price" style="text-align:center;" col-2>$<span id="iprice{{i+1}}">{{item.price_disp}}</span></div>
+          <div text-wrap (press)="presentPopover($event,(i+1))" id="available-{{i+1}}" class="col available" col-2>{{item.qty_available}}</div>
+          <div text-wrap (press)="presentPopover($event,(i+1))" id="qty-{{i+1}}" class="col qty" col-2>{{item.qty}}</div>
+          <div text-wrap (press)="presentPopover($event,(i+1))" id="discount-{{i+1}}" class="col discount" col-2>${{item.discounted.toFixed(2)}}</div>
+          <div text-wrap (press)="presentPopover($event,(i+1))" id="subtotal-{{i+1}}" class="col subtotal" col-2>$<span id="sub{{i+1}}">{{item.subtotal}}</span></div>
+        </div>
+      </div>
+      <div class="order-summary">
+        <span class="label">Sub-Total:</span> <span class="value">${{subTotal.toFixed(2)}}</span><br />
+        <span class="label">Discount:</span> <span class="value">${{totDiscount.toFixed(2)}}</span><br />
+        <span class="label">Grand Total:</span> <span class="value">$<span id="grand-total">{{grand_total.toFixed(2)}}</span></span>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <ion-fab>
+     <button ion-fab (click)="scanItem(true)">
+        <ion-icon name="qr-scanner"></ion-icon>
+     </button>
+   </ion-fab>
+</ion-content>

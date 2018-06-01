@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Customer Information</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-item>
+    <ion-label stacked>Contact Name</ion-label>
+    <ion-input type="text" id="contact_name" (blur)="setCName(contactName)" #contactName value={{info[0]}}></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Company Name</ion-label>
+    <ion-input type="text" id="comp_name" (blur)="setCompName(compName)" #compName value={{info[1]}}></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Phone</ion-label>
+    <ion-input type="number" id="phone" (blur)="setPhone(phone)" #phone value={{info[2]}}></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Email</ion-label>
+    <ion-input type="email" id="email" (blur)="setEmail(email)" #email value={{info[3]}}></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Shipping Address</ion-label>
+    <ion-textarea id="shipping" rows="5" (blur)="setShipping(shipping)" #shipping [ngModel]="info[4]"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Billing Address</ion-label>
+    <ion-textarea id="billing" rows="5" (blur)="setBilling(billing)" #billing [ngModel]="info[5]"></ion-textarea>
+  </ion-item>
+  <ion-item>
+    <ion-label stacked>Order Notes</ion-label>
+    <ion-textarea id="notes" rows="5" (blur)="setNotes(notes)" #notes [ngModel]="info[6]"></ion-textarea>
+  </ion-item>
+</ion-content>

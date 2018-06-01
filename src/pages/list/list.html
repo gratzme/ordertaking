@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Order List</ion-title>
+    <ion-buttons end *ngIf="(ordersFound)">
+      <button ion-button icon-right round (click)="export()">
+        Export
+        <ion-icon name="exit"></ion-icon>
+      </button>
+    </ion-buttons>
+    <!--<ion-buttons end>
+      <button ion-button icon-right round (click)="sync()">
+        Sync Order Data
+        <ion-icon name="sync"></ion-icon>
+      </button>
+    </ion-buttons>-->
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-searchbar (ionInput)="getOrder($event)"></ion-searchbar>
+  <ion-list>
+    <ion-item *ngIf="(!ordersFound)">
+      No orders found.
+    </ion-item>
+
+    <ion-item *ngFor="let order of orders; let i = index" [attr.data-index]="i">
+      <button ion-button full (click)="editOrder(order)">#{{order.order_id}} - {{order.company_name}}</button>
+      <ion-icon name="exit" item-right (click)="exportOrder(order.order_id)"></ion-icon>
+    </ion-item>
+  </ion-list>
+</ion-content>

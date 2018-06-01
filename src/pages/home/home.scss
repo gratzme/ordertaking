@@ -1,0 +1,61 @@
+page-home {
+  ion-fab{
+    bottom: 8px;
+    left: 50%;
+    margin-left: -29px;
+  }
+
+  .row.header{
+    font-size: 13px;
+  }
+  .row.body{
+    font-size: 12px;
+  }
+
+  .header .col {
+    background-color:lightgrey;
+    text-align: center;
+  }
+
+  .col {
+      border: solid 1px grey;
+      border-bottom-style: none;
+      border-right-style: none;
+      text-align: center;
+  }
+
+  .col:last-child {
+      border-right: solid 1px grey;
+  }
+
+  div.row:last-child .col {
+      border-bottom: solid 1px grey;
+  }
+
+  .order-summary{
+    padding-top: 50px;
+    text-align: right;
+  }
+
+  .order-summary .label{
+    font-weight: 600;
+    font-size: 17px;
+  }
+  .order-summary .value{
+    font-weight: 500;
+    text-decoration: underline;
+  }
+
+  a{
+    text-decoration: none;
+  }
+
+  .scanned-item{
+    display: flex;
+    padding: 0px;
+  }
+
+  ion-col{
+    border: none !important;
+  }
+}
